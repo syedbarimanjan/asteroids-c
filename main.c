@@ -3,6 +3,7 @@
 
 #include "raylib.h"
 #include "raymath.h"
+#include "raygui.h"
 
 #include "asteroids.h"
 
@@ -21,8 +22,9 @@ static AsteroidSize _sizes[] = {ASTEROID_SMALL, ASTEROID_MEDIUM, ASTEROID_LARGE}
 float _lastAsteroidCreationTime = -1.0f;
 
 // debug
-bool _showAsteroidCount = true;
-bool _showAngleCone = true;
+bool _showDebugMenu = false;
+bool _showAsteroidCount = false;
+bool _showAngleCone = false;
 Vector2 line0[2];
 Vector2 line1[2];
 //
@@ -58,8 +60,11 @@ void UpdateDrawFrame(void){
     AddAsteroid(GetNextAsteroidPosition(), nextSize);
     _lastAsteroidCreationTime = time;
   }
-  
 
+  if(IsKeyPressed(KEY_GRAVE)){
+    _showDebugMenu = !_showDebugMenu;
+  }
+  
   BeginDrawing();
     ClearBackground(NEARBLACK);
 
@@ -86,12 +91,22 @@ void UpdateDrawFrame(void){
       DrawText(TextFormat("ASTEROIDS: %d", count), 20, 20, 32, WHITE);
       
     }
-
-    
-    
-    
-
-    
+    if (_showDebugMenu) {
+      Rectangle r = {10,screenHeight - 40, 20, 20};
+      // if (GuiButton(r, "Toggle Asteroid Count"))
+      // {
+      //   _showAsteroidCount = !_showAsteroidCount;
+      // }
+  
+      // r.x += 180 + 10;
+      // if (GuiButton(r, "Show Angle Cone"))
+      // {
+      //   _showAngleCone = !_showAngleCone;
+      // }
+       GuiCheckBox(r, "Show asteroid count", &_showAsteroidCount);
+      r.y -= 30;
+       GuiCheckBox(r,"Show angle cone", &_showAngleCone);
+    }
   EndDrawing();
 }
 
@@ -120,7 +135,7 @@ void AddAsteroid(Vector2 position, AsteroidSize size){
   }
 
   if(!created) {
-    TraceLog(LOG_ERROR, "Failed to create an asteroid becuase there were no inactive spots in the array!");
+    TraceLog(LOG_ERROR, "Failed to create an asteroid because there were no inactive spots in the array!");
   }
   
 }
