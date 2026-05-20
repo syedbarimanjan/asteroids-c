@@ -6,5 +6,6 @@
 void ShowDebugMenu(void);
 void ShowDebugVisualizations(int asteroidCount);
 void SetLastCone(Vector2 position, Vector2 velocity);
+void SetPlayerInfo(Vector2 position,Vector2 velocity,float rotation);
 
 #endif

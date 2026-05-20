@@ -12,6 +12,10 @@ static bool _showAngleCone = false;
 static Vector2 line0[2];
 static Vector2 line1[2];
 
+static Vector2 _playerPostion = {0};
+static Vector2 _playerVelocity = {0};
+static float _playerRotation = 180;
+
 void ShowDebugMenu(void) {
   if(IsKeyPressed(KEY_GRAVE)){
     _showDebugMenu = !_showDebugMenu;
@@ -53,4 +57,10 @@ void SetLastCone(Vector2 position, Vector2 velocity) {
 
   line0[1] = Vector2Add(position,Vector2Rotate(Vector2Scale(velocity,10), -ASTEROID_RANDOM_ANGLE));
   line1[1] = Vector2Add(position,Vector2Rotate(Vector2Scale(velocity,10), ASTEROID_RANDOM_ANGLE));
+}
+
+void SetPlayerInfo(Vector2 position,Vector2 velocity,float rotation){
+  _playerPostion = position;
+  _playerVelocity = velocity ;
+  _playerRotation = rotation;
 }
