@@ -1,0 +1,16 @@
+#ifndef CONSTANST_H_
+#define CONSTANST_H_
+
+#include "raylib.h"
+#include "asteroids.h"
+
+#define SCREEN_WIDTH 600
+#define SCREEN_HEIGHT 600
+#define SCREEN_CENTER CLITERAL(Vector2){SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2}
+#define NEARBLACK CLITERAL(Color){15,15,15,255}
+
+#define MAX_ASTEROIDS 64
+#define ASTEROID_RANDOM_ANGLE 20 * DEG2RAD
+#define ASTEROID_DELAY 0.75f
+
+#endif

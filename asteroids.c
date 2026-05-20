@@ -13,14 +13,14 @@ Asteroid CreateAsteroid(Vector2 position, Vector2 velocity, AsteroidSize size) {
   };
 }
 
-void AsteroidUpdate(Asteroid* asteroid, float frametime, float time) {
+bool AsteroidUpdate(Asteroid* asteroid, float frametime, float time) {
   if(!asteroid->active){
-      return;
+      return false;
   }
   
   if(time > asteroid->creationTime + ASTEROID_LIFE) {
     asteroid->active = false;
-    return;
+    return true;
   }
 
   asteroid->position = Vector2Add(asteroid->position,Vector2Scale(asteroid->velocity, frametime));
