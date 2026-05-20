@@ -8,13 +8,15 @@
 #define PLAYER_ACCELERATION_SPEED 750
 #define PLAYER_DECELERATION_SPEED 175
 
-void PlayerUpdate(Player* player) {
-  float frametime = GetFrameTime();
+static void UpdateAngle(Player* player, float frametime) {
   int xIn = (int)IsKeyDown(KEY_RIGHT) - (int)IsKeyDown(KEY_LEFT);
   player->rotation -= (xIn * PLAYER_ROTATION_SPEED * frametime);
+}
 
+static void UpdateVelocity(Player* player, float frametime){
   int yIn = (int)IsKeyDown(KEY_UP) - (int)IsKeyDown(KEY_DOWN);
-  float mag = Vector2Length(player->velocity);
+  float magSqr = Vector2LengthSqr(player->velocity);
+  float mag = sqrt(magSqr);
   if (yIn > 0) {
     Vector2 facingDirection = Vector2Rotate((Vector2) {0,1}, -player->rotation * DEG2RAD);
     player->velocity = Vector2Add(player->velocity,Vector2Scale(facingDirection, PLAYER_ACCELERATION_SPEED * frametime));
@@ -25,8 +27,6 @@ void PlayerUpdate(Player* player) {
   } 
   else {
     if (mag > 0) {
-      float magSqr = mag * mag;
-
       float xSign = (player->velocity.x < 0) ? -1.0f: 1.0f;
       float ySign = (player->velocity.y < 0) ? -1.0f: 1.0f;
 
@@ -44,11 +44,15 @@ void PlayerUpdate(Player* player) {
       player->velocity.y = (yAbs > yDeceleration) ? player->velocity.y - yDeceleration : 0;
     }
   }
+}
+
+void PlayerUpdate(Player* player) {
+  float frametime = GetFrameTime();
+  
+  UpdateAngle(player,frametime);
+  UpdateVelocity(player,frametime);
   
   player->position = Vector2Add(player->position,Vector2Scale(player->velocity, frametime));
-
-
-  
 
   SetPlayerInfo(player->position,player->velocity,player->rotation);
 }
