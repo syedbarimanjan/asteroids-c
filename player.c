@@ -2,11 +2,19 @@
 #include "debug.h"
 #include "raymath.h"
 #include "math.h"
+#include "constants.h"
 
 #define PLAYER_ROTATION_SPEED 360
 #define PLAYER_MOVEMENT_SPEED 250
 #define PLAYER_ACCELERATION_SPEED 750
 #define PLAYER_DECELERATION_SPEED 175
+#define PLAYER_RADIUS 24
+#define PLAYER_NUDGE_VELOCITY 100
+
+#define FIELD_MAX_X (SCREEN_WIDTH + PLAYER_RADIUS / 2)
+#define FIELD_MIN_X (-PLAYER_RADIUS / 2)
+#define FIELD_MAX_Y (SCREEN_HEIGHT + PLAYER_RADIUS / 2)
+#define FIELD_MIN_Y (-PLAYER_RADIUS / 2)
 
 static void UpdateAngle(Player* player, float frametime) {
   int xIn = (int)IsKeyDown(KEY_RIGHT) - (int)IsKeyDown(KEY_LEFT);
@@ -46,6 +54,34 @@ static void UpdateVelocity(Player* player, float frametime){
   }
 }
 
+static void UpdateWrap(Player* player, float frametime) {
+  if(player->position.x > FIELD_MAX_X) {
+    player->position.x = FIELD_MIN_X;
+    if(player->velocity.x < PLAYER_NUDGE_VELOCITY) {
+      player->velocity.x = PLAYER_NUDGE_VELOCITY;
+    }
+  }
+  else if (player->position.x < FIELD_MIN_X) {
+    player->position.x = FIELD_MAX_X;
+    if(player->velocity.x > -PLAYER_NUDGE_VELOCITY) {
+      player->velocity.x = -PLAYER_NUDGE_VELOCITY;
+    }
+  }
+
+  if(player->position.y > FIELD_MAX_Y) {
+    player->position.y = -FIELD_MIN_Y;
+    if(player->velocity.y < PLAYER_NUDGE_VELOCITY) {
+      player->velocity.y = PLAYER_NUDGE_VELOCITY;
+    }
+  }
+  else if (player->position.y < FIELD_MIN_Y) {
+    player->position.y = FIELD_MAX_Y;
+    if(player->velocity.y > -PLAYER_NUDGE_VELOCITY) {
+      player->velocity.y = -PLAYER_NUDGE_VELOCITY;
+    }
+  }
+}
+
 void PlayerUpdate(Player* player) {
   float frametime = GetFrameTime();
   
@@ -54,13 +90,15 @@ void PlayerUpdate(Player* player) {
   
   player->position = Vector2Add(player->position,Vector2Scale(player->velocity, frametime));
 
+  UpdateWrap(player,frametime);
+
   SetPlayerInfo(player->position,player->velocity,player->rotation);
 }
 
 void PlayerDraw(Player player, Texture2D texture) {
   // DrawPoly(player.position, 3,32,player.rotation,RAYWHITE);
   const Rectangle source = {0,0,32,32};
-  Rectangle dest = {player.position.x,player.position.y,48,48};
+  Rectangle dest = {player.position.x,player.position.y,PLAYER_RADIUS * 2,PLAYER_RADIUS * 2};
   Vector2 origin = {dest.width / 2, dest.height /2};
   DrawTexturePro(texture,source,dest,origin,180 - player.rotation,WHITE);
 }
