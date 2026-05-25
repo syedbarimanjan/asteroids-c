@@ -5,9 +5,10 @@
 #include "raymath.h"
 #include "raygui.h"
 
+#include "game_asteroids.h"
+#include "game_projectiles.h"
 #include "asteroids.h"
 #include "constants.h"
-#include "game_asteroids.h"
 #include "debug.h"
 #include "player.h"
 
@@ -24,7 +25,8 @@ int main() {
   _player = (Player) {
   .position = SCREEN_CENTER,
   .velocity = (Vector2) {0},
-  .rotation = 180,
+  .rotation = 0,
+  .lastFireTime = -0.1f
   };
 
   _texturePlayer = LoadTexture("assets/ship.png");
@@ -38,14 +40,18 @@ int main() {
 
 void UpdateDrawFrame(void){
   int activeAsteroids = UpdateAsteroids();
+  int activeProjectiles = UpdateProjectiles();
   PlayerUpdate(&_player);
 
   BeginDrawing();
     ClearBackground(NEARBLACK);
 
     DrawAsteroids();
+    DrawProjectiles();
     PlayerDraw(_player,_texturePlayer);
     ShowDebugVisualizations(activeAsteroids);
     ShowDebugMenu();
+
+    // DrawLineAngle(_player.position, _player.rotation, 100, 20, false);
   EndDrawing();
 }

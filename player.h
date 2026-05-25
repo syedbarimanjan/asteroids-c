@@ -8,6 +8,7 @@ typedef struct Player
   Vector2 position;
   Vector2 velocity;
   float rotation;
+  float lastFireTime;
 } Player;
 
 void PlayerUpdate(Player* player);
