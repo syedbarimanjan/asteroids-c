@@ -31,5 +31,11 @@ void AsteroidDraw(Asteroid asteroid){
   if(!asteroid.active){
     return;
   }
-  DrawPolyLines(asteroid.position, 3,16 * (int)(asteroid.size),asteroid.rotation,WHITE);
+  DrawPolyLines(asteroid.position, 3,AsteroidRadius(asteroid),asteroid.rotation,WHITE);
 }
+
+float AsteroidRadius(Asteroid asteroid) {
+  return 16.0f * (int)asteroid.size;
+}
+
+// 9:30

@@ -8,13 +8,15 @@ static Asteroid _asteroids[MAX_ASTEROIDS] = {0} ;
 static AsteroidSize _sizes[] = {ASTEROID_SMALL, ASTEROID_MEDIUM, ASTEROID_LARGE};
 static float _lastAsteroidCreationTime = -1.0f;
 
-void AddAsteroid(Vector2 position, AsteroidSize size){
+void AddAsteroid(Vector2 position, AsteroidSize size,float speedMod, bool spawn){
   bool created = false;
-  Vector2 velocity = Vector2Subtract(SCREEN_CENTER,position);
-  velocity = Vector2Scale(Vector2Normalize(velocity), GetRandomValue(ASTEROID_SPEED_MIN,ASTEROID_SPEED_MAX));
-  velocity = Vector2Rotate(velocity,(float)GetRandomValue(-ASTEROID_RANDOM_ANGLE,ASTEROID_RANDOM_ANGLE));
 
+  Vector2 velocity = spawn ? Vector2Subtract(SCREEN_CENTER,position) : Vector2Rotate((Vector2){0,1}, (float)GetRandomValue(0,359));
+  velocity = Vector2Scale(Vector2Normalize(velocity), speedMod * GetRandomValue(ASTEROID_SPEED_MIN,ASTEROID_SPEED_MAX));
+  
   SetLastCone(position,velocity);
+  
+  velocity = Vector2Rotate(velocity,(float)GetRandomValue(-ASTEROID_RANDOM_ANGLE,ASTEROID_RANDOM_ANGLE));
 
   for (int i = 0; i < MAX_ASTEROIDS; i++)
   {
@@ -30,6 +32,25 @@ void AddAsteroid(Vector2 position, AsteroidSize size){
     TraceLog(LOG_ERROR, "Failed to create an asteroid because there were no inactive spots in the array!");
   }
   
+}
+
+void DestroyAsteroid(int index, float angle) {
+  Asteroid* asteroid = _asteroids + index;
+  asteroid->active = false;
+
+  // _newAsteroidsBaseAngle = angle;
+  // int points = ASTEROID_BASE_SCORE * (int)asteroid->size;
+  switch (asteroid->size)
+  {
+  case ASTEROID_LARGE:
+  AddAsteroid(asteroid->position, ASTEROID_MEDIUM,0.5f, false);
+  AddAsteroid(asteroid->position, ASTEROID_MEDIUM,0.5f, false);
+    break;
+  case ASTEROID_MEDIUM:
+    AddAsteroid(asteroid->position, ASTEROID_SMALL,0.33f, false);
+    AddAsteroid(asteroid->position, ASTEROID_SMALL,0.33f, false);
+    break;
+  }
 }
 
 Vector2 GetNextAsteroidPosition(void){
@@ -65,7 +86,7 @@ int UpdateAsteroids(void){
   if (time > _lastAsteroidCreationTime + ASTEROID_DELAY)
   {
     AsteroidSize nextSize = _sizes[GetRandomValue(0,2)];
-    AddAsteroid(GetNextAsteroidPosition(), nextSize);
+    AddAsteroid(GetNextAsteroidPosition(), nextSize,1.0f,true);
     _lastAsteroidCreationTime = time;
   }
 
@@ -76,4 +97,8 @@ void DrawAsteroids(void) {
   for (int i = 0; i < MAX_ASTEROIDS; i++){
     AsteroidDraw(_asteroids[i]);
   }
+}
+
+Asteroid* AsteroidsArray(void) {
+  return _asteroids;
 }

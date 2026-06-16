@@ -32,5 +32,6 @@ Asteroid CreateAsteroid(Vector2 position, Vector2 velocity, AsteroidSize size);
 bool AsteroidUpdate(Asteroid* asteroid, float frametime, float time);
 void AsteroidDraw(Asteroid asteroid);
 // void AddAsteroid(Vector2 position, Vector2 velocity, AsteroidSize size);
+float AsteroidRadius(Asteroid asteroid);
 
 #endif
