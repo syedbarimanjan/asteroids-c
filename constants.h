@@ -12,6 +12,6 @@
 
 #define MAX_ASTEROIDS 64
 #define ASTEROID_RANDOM_ANGLE 20 * DEG2RAD
-#define ASTEROID_DELAY 0.75f
+#define ASTEROID_DELAY 2.25f
 
 #endif

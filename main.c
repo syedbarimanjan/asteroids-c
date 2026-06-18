@@ -12,9 +12,8 @@
 #include "debug.h"
 #include "player.h"
 #include "game_score.h"
+#include "game_player.h"
 
-static Player _player;
-static Texture2D _texturePlayer;
 
 void UpdateDrawFrame(void);
 
@@ -22,15 +21,8 @@ int main() {
   srand(time(0));
 
   InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Asteroids in C");
+  InitPlayer();
 
-  _player = (Player) {
-  .position = SCREEN_CENTER,
-  .velocity = (Vector2) {0},
-  .rotation = 0,
-  .lastFireTime = -0.1f
-  };
-
-  _texturePlayer = LoadTexture("assets/ship.png");
 
   while(!WindowShouldClose()){
     UpdateDrawFrame();
@@ -42,14 +34,14 @@ int main() {
 void UpdateDrawFrame(void){
   int activeAsteroids = UpdateAsteroids();
   int activeProjectiles = UpdateProjectiles();
-  PlayerUpdate(&_player);
+  UpdatePlayer();
 
   BeginDrawing();
     ClearBackground(NEARBLACK);
 
     DrawAsteroids();
     DrawProjectiles();
-    PlayerDraw(_player,_texturePlayer);
+    DrawPlayer();
     DrawScore();
     ShowDebugVisualizations(activeAsteroids);
     ShowDebugMenu();
