@@ -11,6 +11,7 @@
 #include "constants.h"
 #include "debug.h"
 #include "player.h"
+#include "game_score.h"
 
 static Player _player;
 static Texture2D _texturePlayer;
@@ -49,6 +50,7 @@ void UpdateDrawFrame(void){
     DrawAsteroids();
     DrawProjectiles();
     PlayerDraw(_player,_texturePlayer);
+    DrawScore();
     ShowDebugVisualizations(activeAsteroids);
     ShowDebugMenu();
 

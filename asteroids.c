@@ -37,5 +37,3 @@ void AsteroidDraw(Asteroid asteroid){
 float AsteroidRadius(Asteroid asteroid) {
   return 16.0f * (int)asteroid.size;
 }
-
-// 9:30

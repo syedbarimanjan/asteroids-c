@@ -1,4 +1,5 @@
 #include "game_asteroids.h"
+#include "game_score.h"
 #include "constants.h"
 #include "debug.h"
 
@@ -35,22 +36,26 @@ void AddAsteroid(Vector2 position, AsteroidSize size,float speedMod, bool spawn)
 }
 
 void DestroyAsteroid(int index, float angle) {
+  const float largeSpeedMod = 0.5f;
+  const float mediumSpeedMod = 0.33f;
   Asteroid* asteroid = _asteroids + index;
   asteroid->active = false;
 
   // _newAsteroidsBaseAngle = angle;
-  // int points = ASTEROID_BASE_SCORE * (int)asteroid->size;
+  int points = ASTEROID_BASE_SCORE * (int)asteroid->size;
   switch (asteroid->size)
   {
   case ASTEROID_LARGE:
-  AddAsteroid(asteroid->position, ASTEROID_MEDIUM,0.5f, false);
-  AddAsteroid(asteroid->position, ASTEROID_MEDIUM,0.5f, false);
+  AddAsteroid(asteroid->position, ASTEROID_MEDIUM,largeSpeedMod, false);
+  AddAsteroid(asteroid->position, ASTEROID_MEDIUM,largeSpeedMod, false);
     break;
   case ASTEROID_MEDIUM:
-    AddAsteroid(asteroid->position, ASTEROID_SMALL,0.33f, false);
-    AddAsteroid(asteroid->position, ASTEROID_SMALL,0.33f, false);
+    AddAsteroid(asteroid->position, ASTEROID_SMALL,mediumSpeedMod, false);
+    AddAsteroid(asteroid->position, ASTEROID_SMALL,mediumSpeedMod, false);
     break;
   }
+
+  AddScore(points);
 }
 
 Vector2 GetNextAsteroidPosition(void){

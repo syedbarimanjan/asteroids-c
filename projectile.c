@@ -1,4 +1,5 @@
 #include "projectile.h"
+#include "constants.h"
 
 #include <math.h>
 
@@ -21,7 +22,7 @@ bool ProjectileUpdate(Projectile* projectile, float frametime, float time) {
   if(!projectile->active) {
     return false;
   }
-  if(time > projectile->creationTime  + PROJECTILE_LIFE){
+  if(time > projectile->creationTime  + PROJECTILE_LIFE || !CheckCollisionPointRec(projectile->position,SCREEN_AREA)){
     projectile->active = false;
     return false;
   }
