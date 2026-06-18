@@ -107,3 +107,12 @@ void DrawAsteroids(void) {
 Asteroid* AsteroidsArray(void) {
   return _asteroids;
 }
+
+void ResetAsteroids(void) {
+  for (int i = 0; i < MAX_ASTEROIDS; i++)
+  {
+    _asteroids[i] = (Asteroid){0} ;
+    _lastAsteroidCreationTime = -1.0f;
+  }
+  
+}

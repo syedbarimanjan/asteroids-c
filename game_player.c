@@ -4,6 +4,7 @@
 #include "constants.h"
 #include "player.h"
 #include "raymath.h"
+#include "game.h"
 
 static Player _player;
 static Texture2D _texturePlayer;
@@ -11,6 +12,11 @@ static int _health = PLAYER_HEALTH_MAX;
 
 
 void InitPlayer(void){
+  ResetPlayer();
+  _texturePlayer = LoadTexture("assets/ship.png");
+}
+
+void ResetPlayer(void) {
   _player = (Player) {
     .position = SCREEN_CENTER,
     .velocity = (Vector2) {0},
@@ -18,8 +24,7 @@ void InitPlayer(void){
     .lastFireTime = -1.0f,
     .state = PLAYER_DEFAULT
   };
-
-  _texturePlayer = LoadTexture("assets/ship.png");
+  _health = PLAYER_HEALTH_MAX;
 }
 
 void DrawPlayer(void){
@@ -69,7 +74,7 @@ static void TickState(void){
     break;
   case PLAYER_DEAD:
     if((GetTime() - _player.timeStateEntered) > playerDeathDelay){
-      // GameOver();
+      GameOver();
     }
     break;
   default:

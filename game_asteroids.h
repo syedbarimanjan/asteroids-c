@@ -9,5 +9,6 @@ int UpdateAsteroids(void);
 void DrawAsteroids(void);
 Asteroid* AsteroidsArray(void);
 void DestroyAsteroid(int index, float angle);
+void ResetAsteroids(void);
 
 #endif

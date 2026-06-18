@@ -63,3 +63,10 @@ void DrawProjectiles(void) {
     ProjectileDraw(_projectiles[i]);
   }
 }
+
+void ResetProjectiles(void){
+  for (int i = 0; i < PROJECTILE_MAX; i++)
+  {
+    _projectiles[i] = (Projectile){0};
+  }
+}
