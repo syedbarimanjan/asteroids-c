@@ -107,6 +107,9 @@ void PlayerMove(Player* player) {
 }
 
 void PlayerDraw(Player player, Texture2D texture) {
+  if(player.state == PLAYER_DEAD) {
+    return;
+  }
   // DrawPoly(player.position, 3,32,player.rotation,RAYWHITE);
   const Rectangle source = {0,0,32,32};
   Rectangle dest = {player.position.x,player.position.y,PLAYER_RADIUS * 2,PLAYER_RADIUS * 2};

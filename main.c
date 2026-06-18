@@ -13,6 +13,7 @@
 #include "player.h"
 #include "game_score.h"
 #include "game_player.h"
+#include "game_ui.h"
 
 
 void UpdateDrawFrame(void);
@@ -43,6 +44,7 @@ void UpdateDrawFrame(void){
     DrawProjectiles();
     DrawPlayer();
     DrawScore();
+    DrawHealth();
     ShowDebugVisualizations(activeAsteroids);
     ShowDebugMenu();
 

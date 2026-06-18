@@ -7,7 +7,7 @@
 
 static Player _player;
 static Texture2D _texturePlayer;
-static int _health = 3;
+static int _health = PLAYER_HEALTH_MAX;
 
 
 void InitPlayer(void){
@@ -31,7 +31,7 @@ static void OnDeath(void){
 }
 
 static void OnCollision(Asteroid* asteroid){
-  const float playerNudgeMagnitude = 300.0f;
+  const float playerNudgeMagnitude = 200.0f;
   const float asteroidSpeedReduction = 0.4f;
 
   _health--;
@@ -49,8 +49,9 @@ static void OnCollision(Asteroid* asteroid){
 }
 
 static void TickState(void){
-  const float stunDuration = 0.33f;
-  const float iframeDuration = 0.33f;
+  const float stunDuration = 0.2f;
+  const float iframeDuration = 0.8f;
+  const float playerDeathDelay = 1.5f;
 
   switch (_player.state)
   {
@@ -67,6 +68,9 @@ static void TickState(void){
     }
     break;
   case PLAYER_DEAD:
+    if((GetTime() - _player.timeStateEntered) > playerDeathDelay){
+      // GameOver();
+    }
     break;
   default:
     break;
@@ -112,4 +116,8 @@ void UpdatePlayer(void){
 
     break;
   }
-}//17:44
+}
+
+int PlayerHealth(void){
+  return _health;
+}
