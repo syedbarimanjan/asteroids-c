@@ -29,9 +29,7 @@ void UpdateDrawFrame(void){
   UpdateGame();
 
   BeginDrawing();
-    ClearBackground(NEARBLACK);
-
+    ClearBackground(BEIGE);
     DrawGame();
-
   EndDrawing();
 }

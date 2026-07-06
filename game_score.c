@@ -13,6 +13,7 @@ void AddScore(int points){
 }
 
 void DrawScore(void){
+  DrawFPS(10, 10);
   const int fontSize = 48;
   const int fontSizeSmall = 24;
   const Color black = Fade(BLACK, 0.8f);
@@ -25,7 +26,7 @@ void DrawScore(void){
 
   const int xPad = 16;
   const int yPad = 8;
-  const int shadow = 8;
+  const int shadow = 4;
 
   int x = SCREEN_WIDTH - measureNumberText - measurePtsText - (xPad * 1.5);
   int y = yPad;

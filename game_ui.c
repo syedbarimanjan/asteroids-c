@@ -7,8 +7,8 @@ void DrawHealth(void) {
   const Color healthMed = YELLOW;
   const Color healthLow = RED ;
 
-  const float barWidth = 300.0f;
-  const int lineThick = 8;
+  const float barWidth = 200.0f;
+  const int lineThick = 6;
   const int cellGap = 3;
   const float cellWidth = (barWidth + cellGap - (lineThick *2)) / PLAYER_HEALTH_MAX;
 

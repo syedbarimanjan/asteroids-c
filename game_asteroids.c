@@ -4,6 +4,7 @@
 #include "debug.h"
 
 #include "raymath.h"
+#include <raylib.h>
 
 static Asteroid _asteroids[MAX_ASTEROIDS] = {0} ;
 static AsteroidSize _sizes[] = {ASTEROID_SMALL, ASTEROID_MEDIUM, ASTEROID_LARGE};
@@ -11,6 +12,8 @@ static float _lastAsteroidCreationTime = -1.0f;
 static Texture2D _textureAsteroid;
 
 void AddAsteroid(Vector2 position, AsteroidSize size,float speedMod, bool spawn){
+  UnloadTexture(_textureAsteroid);
+
   bool created = false;
 
   Vector2 velocity = spawn ? Vector2Subtract(SCREEN_CENTER,position) : Vector2Rotate((Vector2){0,1}, (float)GetRandomValue(0,359));
@@ -37,6 +40,7 @@ void AddAsteroid(Vector2 position, AsteroidSize size,float speedMod, bool spawn)
 }
 
 void DestroyAsteroid(int index, float angle) {
+  UnloadTexture(_textureAsteroid);
   const float largeSpeedMod = 0.5f;
   const float mediumSpeedMod = 0.33f;
   Asteroid* asteroid = _asteroids + index;
@@ -47,10 +51,14 @@ void DestroyAsteroid(int index, float angle) {
   switch (asteroid->size)
   {
   case ASTEROID_LARGE:
+    UnloadTexture(_textureAsteroid);
+
     AddAsteroid(asteroid->position, ASTEROID_MEDIUM,largeSpeedMod, false);
     AddAsteroid(asteroid->position, ASTEROID_MEDIUM,largeSpeedMod, false);
     break;
   case ASTEROID_MEDIUM:
+    UnloadTexture(_textureAsteroid);
+
     AddAsteroid(asteroid->position, ASTEROID_SMALL,mediumSpeedMod, false);
     AddAsteroid(asteroid->position, ASTEROID_SMALL,mediumSpeedMod, false);
     break;
@@ -78,6 +86,7 @@ Vector2 GetNextAsteroidPosition(void){
 }
 
 int UpdateAsteroids(void){
+  UnloadTexture(_textureAsteroid);
   int activeAsteroids = 0;
 
   float frametime = GetFrameTime();
@@ -115,6 +124,7 @@ void ResetAsteroids(void) {
   {
     _asteroids[i] = (Asteroid){0} ;
     _lastAsteroidCreationTime = -1.0f;
+    UnloadTexture(_textureAsteroid);
   }
 
 }
