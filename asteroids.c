@@ -1,5 +1,6 @@
 #include "asteroids.h"
 #include "raymath.h"
+#include <raylib.h>
 
 Asteroid CreateAsteroid(Vector2 position, Vector2 velocity, AsteroidSize size) {
   return (Asteroid) {
@@ -17,7 +18,7 @@ bool AsteroidUpdate(Asteroid* asteroid, float frametime, float time) {
   if(!asteroid->active){
       return false;
   }
-  
+
   if(time > asteroid->creationTime + ASTEROID_LIFE) {
     asteroid->active = false;
     return true;
@@ -27,11 +28,16 @@ bool AsteroidUpdate(Asteroid* asteroid, float frametime, float time) {
   asteroid->rotation += asteroid->rotationSpeed * frametime;
 }
 
-void AsteroidDraw(Asteroid asteroid){
+void AsteroidDraw(Asteroid asteroid, Texture2D texture){
   if(!asteroid.active){
     return;
   }
-  DrawPolyLines(asteroid.position, 3,AsteroidRadius(asteroid),asteroid.rotation,WHITE);
+
+  const Rectangle source = {0,0,32,32};
+  Rectangle dest = {asteroid.position.x,asteroid.position.y,AsteroidRadius(asteroid) * 1.5,AsteroidRadius(asteroid) * 1.5};
+  Vector2 origin = {dest.width / 2, dest.height /2};
+
+  DrawTexturePro(texture, source, dest, origin, asteroid.rotation, WHITE);
 }
 
 float AsteroidRadius(Asteroid asteroid) {

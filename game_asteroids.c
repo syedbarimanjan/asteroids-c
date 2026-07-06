@@ -8,15 +8,16 @@
 static Asteroid _asteroids[MAX_ASTEROIDS] = {0} ;
 static AsteroidSize _sizes[] = {ASTEROID_SMALL, ASTEROID_MEDIUM, ASTEROID_LARGE};
 static float _lastAsteroidCreationTime = -1.0f;
+static Texture2D _textureAsteroid;
 
 void AddAsteroid(Vector2 position, AsteroidSize size,float speedMod, bool spawn){
   bool created = false;
 
   Vector2 velocity = spawn ? Vector2Subtract(SCREEN_CENTER,position) : Vector2Rotate((Vector2){0,1}, (float)GetRandomValue(0,359));
   velocity = Vector2Scale(Vector2Normalize(velocity), speedMod * GetRandomValue(ASTEROID_SPEED_MIN,ASTEROID_SPEED_MAX));
-  
+
   SetLastCone(position,velocity);
-  
+
   velocity = Vector2Rotate(velocity,(float)GetRandomValue(-ASTEROID_RANDOM_ANGLE,ASTEROID_RANDOM_ANGLE));
 
   for (int i = 0; i < MAX_ASTEROIDS; i++)
@@ -32,7 +33,7 @@ void AddAsteroid(Vector2 position, AsteroidSize size,float speedMod, bool spawn)
   if(!created) {
     TraceLog(LOG_ERROR, "Failed to create an asteroid because there were no inactive spots in the array!");
   }
-  
+
 }
 
 void DestroyAsteroid(int index, float angle) {
@@ -46,8 +47,8 @@ void DestroyAsteroid(int index, float angle) {
   switch (asteroid->size)
   {
   case ASTEROID_LARGE:
-  AddAsteroid(asteroid->position, ASTEROID_MEDIUM,largeSpeedMod, false);
-  AddAsteroid(asteroid->position, ASTEROID_MEDIUM,largeSpeedMod, false);
+    AddAsteroid(asteroid->position, ASTEROID_MEDIUM,largeSpeedMod, false);
+    AddAsteroid(asteroid->position, ASTEROID_MEDIUM,largeSpeedMod, false);
     break;
   case ASTEROID_MEDIUM:
     AddAsteroid(asteroid->position, ASTEROID_SMALL,mediumSpeedMod, false);
@@ -82,7 +83,7 @@ int UpdateAsteroids(void){
   float frametime = GetFrameTime();
   float time = GetTime();
 
-  for (int i = 0; i < MAX_ASTEROIDS; i++){ 
+  for (int i = 0; i < MAX_ASTEROIDS; i++){
     if (AsteroidUpdate(_asteroids + i, frametime,time)) {
       activeAsteroids++;
     }
@@ -99,8 +100,9 @@ int UpdateAsteroids(void){
 }
 
 void DrawAsteroids(void) {
+  _textureAsteroid = LoadTexture("assets/asteroid.png");
   for (int i = 0; i < MAX_ASTEROIDS; i++){
-    AsteroidDraw(_asteroids[i]);
+    AsteroidDraw(_asteroids[i],_textureAsteroid);
   }
 }
 
@@ -114,5 +116,5 @@ void ResetAsteroids(void) {
     _asteroids[i] = (Asteroid){0} ;
     _lastAsteroidCreationTime = -1.0f;
   }
-  
+
 }
