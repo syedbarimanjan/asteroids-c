@@ -38,7 +38,7 @@ static void UpdateVelocity(Player* player, float frametime){
     if (mag > PLAYER_MOVEMENT_SPEED) {
       player->velocity = Vector2Scale(player->velocity, PLAYER_MOVEMENT_SPEED / mag);
     }
-  } 
+  }
   else {
     if (mag > 0) {
       float xSign = (player->velocity.x < 0) ? -1.0f: 1.0f;
@@ -46,14 +46,14 @@ static void UpdateVelocity(Player* player, float frametime){
 
       float xAbs = player->velocity.x * xSign;
       float yAbs = player->velocity.y * ySign;
-  
+
       float xWeight = xAbs * xAbs / magSqr;
       float yWeight = yAbs * yAbs / magSqr;
 
-  
+
       float xDeceleration = xWeight * PLAYER_DECELERATION_SPEED * xSign * frametime;
       float yDeceleration = yWeight * PLAYER_DECELERATION_SPEED * ySign * frametime;
-  
+
       player->velocity.x = (xAbs > xDeceleration) ? player->velocity.x - xDeceleration : 0;
       player->velocity.y = (yAbs > yDeceleration) ? player->velocity.y - yDeceleration : 0;
     }
@@ -93,12 +93,12 @@ static void UpdateWrap(Player* player, float frametime) {
 void PlayerMove(Player* player) {
   float frametime = GetFrameTime();
   float time = GetTime();
-  
+
   if(player->state != PLAYER_STUNNED && player->state != PLAYER_DEAD){
     UpdateAngle(player,frametime);
     UpdateVelocity(player,frametime);
   }
-  
+
   player->position = Vector2Add(player->position,Vector2Scale(player->velocity, frametime));
 
   UpdateWrap(player,frametime);

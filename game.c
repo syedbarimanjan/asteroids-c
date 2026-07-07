@@ -1,6 +1,7 @@
 #include "game.h"
 #include "game_asteroids.h"
 #include "game_projectiles.h"
+#include "game_powerup.h"
 #include "game_score.h"
 #include "game_player.h"
 #include "game_ui.h"
@@ -31,10 +32,11 @@ static void SetState(GameState state){
     ResetPlayer();
     ResetProjectiles();
     ResetScore();
+    ResetPowerups();
     break;
   case GAME_OVER:
     break;
-  
+
   default:
     break;
   }
@@ -49,6 +51,7 @@ void UpdateGame(void){
   _activeAsteroids = UpdateAsteroids();
   UpdateProjectiles();
   UpdatePlayer();
+  UpdatePowerups();
 }
 
 void DrawGame(void){
@@ -73,13 +76,14 @@ void DrawGame(void){
   case GAME_PLAYING:
     DrawAsteroids();
     DrawProjectiles();
+    DrawPowerups();
     DrawPlayer();
     DrawScore();
     DrawHealth();
     ShowDebugVisualizations(_activeAsteroids);
     break;
   case GAME_OVER:
-    DrawAsteroids();
+    // DrawAsteroids();
 
     DrawRectangleRec(SCREEN_AREA,Fade(BLACK,0.5f));
 
@@ -87,9 +91,9 @@ void DrawGame(void){
     const char* gameover = "Game Over:(";
     float measure =MeasureText(gameover,fontSize);
     DrawText(gameover,SCREEN_CENTER.x-measure/2,fontSize * 1.5f,fontSize,WHITE);
-    
+
     DrawScore();
-    
+
     if (GuiButton(topButton, "Play Again!")){
       SetState(GAME_PLAYING);
       return;
@@ -101,7 +105,7 @@ void DrawGame(void){
     }
 
     break;
-  
+
   default:
     break;
   }

@@ -1,8 +1,10 @@
 #include "game_player.h"
 #include "game_asteroids.h"
+#include "game_powerup.h"
 #include "game_projectiles.h"
 #include "constants.h"
 #include "player.h"
+#include "powerup.h"
 #include "raymath.h"
 #include "game.h"
 
@@ -90,12 +92,24 @@ void UpdatePlayer(void){
     return;
   }
 
+  PowerUp* powerup = GetPowerups();
+  // Projectile* projectiles = GetProjectile();
   float time = GetTime();
   if (IsKeyDown(KEY_SPACE)){
     if(time > _player.lastFireTime + PLAYER_FIRE_DELAY) {
       AddProjectile(Vector2Add(_player.position, Vector2Scale(PlayerFacingDirection(_player),PLAYER_PROJECTILE_OFFSET)), _player.rotation);
       _player.lastFireTime = time;
     }
+  }
+
+
+  for (int i = 0; i < MAX_POWERUPS; i++){
+    if(powerup[i].type == POWERUP_LIFE && _health < 5 && DestroyPowerup(&_player, powerup[i])){
+      _health += 1;
+    }
+    // if(powerup[i].type == POWERUP_BULLETS_SPEED && DestroyPowerup(&_player, powerup[i])){
+    //   projectiles->speed += 50;
+    // }
   }
 
   if(_player.state == PLAYER_IFRAME) {
@@ -125,4 +139,8 @@ void UpdatePlayer(void){
 
 int PlayerHealth(void){
   return _health;
+}
+
+Player* GetPlayer(void){
+  return &_player;
 }

@@ -10,5 +10,6 @@ void DrawPlayer(void);
 void UpdatePlayer(void);
 int PlayerHealth(void);
 void ResetPlayer(void);
+Player* GetPlayer(void);
 
 #endif
