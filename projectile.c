@@ -9,11 +9,8 @@
 #include <raylib.h>
 
 #define PROJECTILE_LIFE 2.0f
-#define PROJECTILE_COLOR CLITERAL(Color){245,201,207,255}
+#define PROJECTILE_COLOR RED
 
-// int SPEED = 500;
-// float PROJECTILE_THICKNESS = 10.0f;
-// float PROJECTILE_LENGTH = 30.0f;
 
 Projectile CreateProjectile(Vector2 position, float rotation) {
   return (Projectile) {
@@ -50,7 +47,7 @@ void ProjectileDraw(Projectile projectile) {
     return;
   }
   Rectangle rect = {projectile.position.x, projectile.position.y, projectile.thickness, projectile.length};
-  // float originY = positionIsMiddle ? length / 2 : length;
+
   Vector2 origin = {(rect.width / 2), (rect.height / 2)};
   DrawRectanglePro(rect, origin, projectile.rotation, PROJECTILE_COLOR);
 }

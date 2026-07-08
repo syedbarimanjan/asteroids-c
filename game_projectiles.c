@@ -18,9 +18,13 @@ Projectile AddProjectile(Vector2 position, float rotation){
     }
 
     Projectile projectile = CreateProjectile(position,rotation);
+    Player* player = GetPlayer();
+    projectile.speed += player->projectileSpeedBonusPowerup;
+    projectile.thickness += player->projectileThicknessBonusPowerup;
+    projectile.length += player->projectileLengthBonusPowerup;
     _projectiles[i] = projectile;
     created = true;
-    return projectile;
+    break;
   }
 
   if (!created) {
@@ -41,27 +45,6 @@ int UpdateProjectiles(void) {
   int projectileCount = 0;
   for (int i = 0; i < PROJECTILE_MAX; i++) {
     Projectile* projectile = _projectiles + i;
-
-    // for (int j = 0; j < MAX_POWERUPS; j++){
-    //   Player* player = GetPlayer();
-    //   PowerUp* powerups = GetPowerups();
-    //   TraceLog(LOG_INFO, "type=%d active=%d", powerups[j].type, powerups[j].active);
-    //   bool hit = DestroyPowerup(player, powerups[j]);
-
-    //   TraceLog(LOG_INFO, "hit=%d", hit);
-    //   if(powerups[j].type == POWERUP_BULLETS_SPEED && hit){
-    //       projectile->speed += 50;
-    //     }
-    //    if(powerups[j].type == POWERUP_BULLETS_SIZE && hit){
-    //       projectile->thickness = projectile->thickness + 10.0f;
-    //       projectile->length = projectile->length + 10.0f;
-    //       DrawFPS(10, 100);
-    //       // Rectangle rect = {projectile->position.x, projectile->position.y, PROJECTILE_THICKNESS, PROJECTILE_LENGTH};
-    //       // // float originY = positionIsMiddle ? length / 2 : length;
-    //       // Vector2 origin = {(rect.width / 2), (rect.height / 2)};
-    //       // DrawRectanglePro(rect, origin, projectile->rotation, BLACK);
-    //     }
-    // }
 
     if (ProjectileUpdate(projectile, frametime,time)) { // can be &_projectiles[i] like this too
       projectileCount++;

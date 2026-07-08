@@ -40,12 +40,13 @@ void UpdatePowerups(void){
   for (int i = 0; i < MAX_POWERUPS; i++){
     if(DestroyPowerup(player, _powerups[i])){
       _powerups[i].active = false;
-      // if(_powerups[i].type == POWERUP_LIFE){
-      //   // Vector2 direction = Vector2Normalize(player->velocity);
-      //   // player->velocity = Vector2Add(Vector2Scale(direction, 20), player->velocity);
-      //   playerHealth += 1;
-      //   DrawFPS(100, 100);
-      // }
+      if(_powerups[i].type == POWERUP_BULLETS_SPEED){
+        player->projectileSpeedBonusPowerup += 500;
+      }
+      if(_powerups[i].type == POWERUP_BULLETS_SIZE){
+        player->projectileLengthBonusPowerup += 10.0f;
+        player->projectileThicknessBonusPowerup += 10.0f;
+      }
     }
     if(player->state == PLAYER_STUNNED){
       int center = GetRandomValue(0, GetScreenWidth());

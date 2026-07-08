@@ -24,7 +24,10 @@ void ResetPlayer(void) {
     .velocity = (Vector2) {0},
     .rotation = 0,
     .lastFireTime = -1.0f,
-    .state = PLAYER_DEFAULT
+    .state = PLAYER_DEFAULT,
+    .projectileSpeedBonusPowerup = 0,
+    .projectileThicknessBonusPowerup = 0.0f,
+    .projectileLengthBonusPowerup = 0.0f
   };
   _health = PLAYER_HEALTH_MAX;
 }
@@ -93,7 +96,6 @@ void UpdatePlayer(void){
   }
 
   PowerUp* powerup = GetPowerups();
-  // Projectile* projectiles = GetProjectile();
   float time = GetTime();
   if (IsKeyDown(KEY_SPACE)){
     if(time > _player.lastFireTime + PLAYER_FIRE_DELAY) {
@@ -107,9 +109,6 @@ void UpdatePlayer(void){
     if(powerup[i].type == POWERUP_LIFE && _health < 5 && DestroyPowerup(&_player, powerup[i])){
       _health += 1;
     }
-    // if(powerup[i].type == POWERUP_BULLETS_SPEED && DestroyPowerup(&_player, powerup[i])){
-    //   projectiles->speed += 50;
-    // }
   }
 
   if(_player.state == PLAYER_IFRAME) {

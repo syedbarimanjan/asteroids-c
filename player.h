@@ -22,6 +22,10 @@ typedef struct Player
   float timeStateEntered;
   float rotation;
   float lastFireTime;
+
+  int projectileSpeedBonusPowerup;
+  float projectileThicknessBonusPowerup;
+  float projectileLengthBonusPowerup;
 } Player;
 
 void PlayerMove(Player* player);
