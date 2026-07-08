@@ -63,6 +63,10 @@ void DrawGame(void){
   switch (_state)
   {
   case GAME_MAIN_MENU:
+    const int fontSizeGameInstructions = 24;
+    const char* gameInstructions = "Use Arrows to move and space to shoot\n Red powerup give 1 health\n Blue increases bullets size\n Green increases bullets speed.";
+    float measureGameInstructions =MeasureText(gameInstructions,fontSizeGameInstructions);
+    DrawText(gameInstructions,SCREEN_CENTER.x-measureGameInstructions/2,fontSizeGameInstructions * 1.5f,fontSizeGameInstructions,WHITE);
     if (GuiButton(topButton, "Asteroids!")){
       SetState(GAME_PLAYING);
       return;
@@ -90,7 +94,7 @@ void DrawGame(void){
     const int fontSize = 64;
     const char* gameover = "Game Over:(";
     float measure =MeasureText(gameover,fontSize);
-    DrawText(gameover,SCREEN_CENTER.x-measure/2,fontSize * 1.5f,fontSize,WHITE);
+    DrawText(gameover,SCREEN_CENTER.x-measure/2,fontSize * 1.5f,fontSize,BLACK);
 
     DrawScore();
 

@@ -19,12 +19,15 @@ void DrawPowerup(PowerUp powerup){
   }
 
   if(powerup.type == POWERUP_LIFE){
-    DrawCircle(powerup.position.x, powerup.position.y, 100, RED);
+    DrawCircle(powerup.position.x, powerup.position.y, 20, RED);
+    // DrawText("+1 HP",powerup.position.x,powerup.position.y,5,BLACK);
   }
   if(powerup.type == POWERUP_BULLETS_SPEED){
-    DrawCircle(powerup.position.x, powerup.position.y, 100, GREEN);
+    DrawCircle(powerup.position.x, powerup.position.y, 20, GREEN);
+    // DrawText("2x Bullets Speed",powerup.position.x,powerup.position.y,5,BLACK);
   }
   if(powerup.type == POWERUP_BULLETS_SIZE){
-    DrawCircle(powerup.position.x, powerup.position.y, 100, BLUE);
+    DrawCircle(powerup.position.x, powerup.position.y, 20, BLUE);
+    // DrawText("2x Bullets size",powerup.position.x,powerup.position.y,5,BLACK);
   }
 }

@@ -30,7 +30,7 @@ void AddPowerup(Vector2 position){
 }
 
 bool DestroyPowerup(Player* player,PowerUp powerup) {
-  return !powerup.active ? false : CheckCollisionPointCircle(powerup.position, player->position,100);
+  return !powerup.active ? false : CheckCollisionPointCircle(powerup.position, player->position,30);
 }
 
 void UpdatePowerups(void){
