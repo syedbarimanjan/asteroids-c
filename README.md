@@ -12,7 +12,7 @@ Red powerup gives health, Blue increases bullets size and Green increases bullet
 
 **The Green circles on the screen are powerups there can be green,blue and red powerups which spawn when you get hit by an asteroid.**
 
-![game-screen](https://cdn.hackclub.com/01a009cf-1415-7f64-ab93-ea08e76949b0/screenshot_20260815_233135.png)
+![game-screen](https://cdn.hackclub.com/01a009fb-656a-76ad-b33f-fc979d325dba/screenshot_20260816_145001.png)
 
 # End screen
 ![end-game](https://cdn.hackclub.com/01a009cf-1110-79f0-b591-654525bc4411/screenshot_20260815_233612.png)
