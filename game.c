@@ -64,7 +64,7 @@ void DrawGame(void){
   {
   case GAME_MAIN_MENU:{
     const int fontSizeGameInstructions = 24;
-    const char* gameInstructions = "Use Arrows to move and space to shoot\n Red powerup give 1 health\n Blue increases bullets size\n Green increases bullets speed.";
+    const char* gameInstructions = "Use Arrows to move and space to shoot\n Red powerup gives 1 health\n Blue increases bullets size\n Green increases bullets speed.";
     float measureGameInstructions =MeasureText(gameInstructions,fontSizeGameInstructions);
     DrawText(gameInstructions,SCREEN_CENTER.x-measureGameInstructions/2,fontSizeGameInstructions * 1.5f,fontSizeGameInstructions,WHITE);
     if (GuiButton(topButton, "Asteroids!")){

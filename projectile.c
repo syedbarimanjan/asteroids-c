@@ -9,7 +9,7 @@
 #include <raylib.h>
 
 #define PROJECTILE_LIFE 2.0f
-#define PROJECTILE_COLOR RED
+#define PROJECTILE_COLOR BLACK
 
 
 Projectile CreateProjectile(Vector2 position, float rotation) {
@@ -49,5 +49,7 @@ void ProjectileDraw(Projectile projectile) {
   Rectangle rect = {projectile.position.x, projectile.position.y, projectile.thickness, projectile.length};
 
   Vector2 origin = {(rect.width / 2), (rect.height / 2)};
-  DrawRectanglePro(rect, origin, projectile.rotation, PROJECTILE_COLOR);
+  // DrawRectanglePro(rect, origin, projectile.rotation, PROJECTILE_COLOR);
+  DrawCircle(rect.x, rect.y, 10, RED);
+  DrawCircleGradient(rect.x, rect.y, 10, WHITE, PROJECTILE_COLOR);
 }
