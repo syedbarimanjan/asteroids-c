@@ -1,0 +1,8 @@
+#!/bin/sh
+
+export HERE="$(dirname "$(readlink -f "${0}")")"
+export PATH="$HERE:$PATH"
+
+cd "$HERE"
+
+"$HERE/main"

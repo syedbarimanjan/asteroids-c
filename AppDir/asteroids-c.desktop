@@ -1,0 +1,9 @@
+#!/usr/bin/env xdg-open
+# SPDX-License-Identifier: GPL-2.0-or-later
+[Desktop Entry]
+Version=1.0
+Name=asteroids-c
+Exec=main
+Type=Application
+Categories=Graphics;
+Icon=musializer
