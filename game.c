@@ -62,7 +62,7 @@ void DrawGame(void){
 
   switch (_state)
   {
-  case GAME_MAIN_MENU:
+  case GAME_MAIN_MENU:{
     const int fontSizeGameInstructions = 24;
     const char* gameInstructions = "Use Arrows to move and space to shoot\n Red powerup give 1 health\n Blue increases bullets size\n Green increases bullets speed.";
     float measureGameInstructions =MeasureText(gameInstructions,fontSizeGameInstructions);
@@ -77,6 +77,7 @@ void DrawGame(void){
       return;
     }
     break;
+  }
   case GAME_PLAYING:
     DrawAsteroids();
     DrawProjectiles();
